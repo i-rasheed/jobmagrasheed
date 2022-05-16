@@ -18,7 +18,6 @@ export const searchRepository = (value) => async (dispatch) => {
     const { data } = await Axios.get(
       `https://api.github.com/search/repositories?q=${value}`
     );
-
     dispatch({ type: REPOSITORY_SEARCH_SUCCESS, payload: data });
   } catch (error) {
     dispatch({

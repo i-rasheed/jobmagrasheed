@@ -12,13 +12,27 @@ export const repositorySearchReducer = (state = {}, action) => {
     case REPOSITORY_SEARCH_REQUEST:
       return { ...state, loading: true };
     case REPOSITORY_SEARCH_SUCCESS:
+      if (action.payload.total_count === 0) {
+        return {
+          ...state,
+          loading: false,
+          message: "No repository found with this name",
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          repository: action.payload,
+        };
+      }
+
+    case REPOSITORY_SEARCH_FAIL:
       return {
         ...state,
         loading: false,
-        repository: action.payload,
+        // message: !action.payload ? "No repo" : "",
+        error: action.payload,
       };
-    case REPOSITORY_SEARCH_FAIL:
-      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

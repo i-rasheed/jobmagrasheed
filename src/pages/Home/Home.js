@@ -17,7 +17,7 @@ export default function Home() {
   };
 
   const repositorySearched = useSelector((state) => state.repositorySearched);
-  const { loading, repository, error } = repositorySearched;
+  const { loading, repository, error, message } = repositorySearched;
 
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -33,6 +33,7 @@ export default function Home() {
             onChange={handleInputChange}
             className='form-control'
             id='search'
+            value={value}
             placeholder='Search by name'
             required
           />
@@ -48,6 +49,8 @@ export default function Home() {
           <Spinner />
         ) : error ? (
           <ErrorDisplay error={error} />
+        ) : message ? (
+          <ErrorDisplay error={message} />
         ) : repository ? (
           <SearchResult repository={repository} />
         ) : (
